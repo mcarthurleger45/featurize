@@ -24,7 +24,13 @@ class FeatureRequest(TestCase):
     def setUp(self):
         self.client = mommy.make('core.Client', name='Arthur')
         self.product_area = mommy.make('core.ProductArea', area='Finance')
-        self.featureRequest = mommy.make('core.FeatureRequest', title='Feature', description='description', client=self.client, product_area=self.product_area)
+        self.featureRequest = mommy.make('core.FeatureRequest', 
+                                         title='Feature',
+                                         description='description',
+                                         client=self.client, 
+                                         product_area=self.product_area,
+                                         priority=1)
 
     def test_str(self):
-        self.assertEquals('[Finance] :: [Feature] by Arthur', str(self.featureRequest))
+        expected = '[Finance] :: [Feature] by Arthur'
+        self.assertEquals(expected, str(self.featureRequest))
