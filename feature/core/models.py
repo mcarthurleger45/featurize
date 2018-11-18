@@ -23,4 +23,18 @@ class FeatureRequest(models.Model):
 
     def __str__(self):
         return('[{product}] :: [{title}] by {username}'.format(product=self.product_area, title=self.title, username=self.client))
-    
+
+    @staticmethod
+    def reorder(fr, priority):
+        exists = FeatureRequest.objects.exclude(id=fr.id).filter(priority = priority)
+        if len(exists) > 0:
+            elem = exists[0]
+            elem.priority = priority + 1
+            elem.save()
+            FeatureRequest.reorder(elem, elem.priority)
+        else:
+            return
+
+    def save(self, *args, **kwargs):
+        super(FeatureRequest, self).save(*args, **kwargs)
+        FeatureRequest.reorder(self, self.priority)
