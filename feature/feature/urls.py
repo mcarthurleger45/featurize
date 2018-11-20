@@ -16,17 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
-from api.views import FeatureRequestViewset
+from api.views import FeatureRequestViewset, UserViewSet
 from django.views.generic import TemplateView
+from rest_framework_jwt.views import obtain_jwt_token
 
 router = DefaultRouter()
 
 router.register(r'features', FeatureRequestViewset)
-
+router.register(r'users', UserViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    re_path('.*', TemplateView.as_view(template_name='index.html')),
+    path('token-auth/', obtain_jwt_token),
+    re_path('app/', TemplateView.as_view(template_name='index.html')),
 ]

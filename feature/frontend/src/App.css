@@ -8,7 +8,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -16,6 +15,9 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  background: #003973;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #E5E5BE, #003973);
+  background: linear-gradient(to right, #E5E5BE, #003973); 
 }
 
 .App-link {
