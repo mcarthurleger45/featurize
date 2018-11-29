@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FEATURED_REQUEST_API } from '../../endpoints';
 import FeatureRequest from './item';
-import './style.css'
+import './list.css';
+import PropTypes from 'prop-types';
 
 class FeatureRequestList extends Component {
     constructor(props){
@@ -18,12 +19,17 @@ class FeatureRequestList extends Component {
     }
 
     render(){
+        const showActions = this.props.user != '';
         return (
-            <div className='featuredRequestList'>
-                { this.state.data.map((i, featureRequest) => <FeatureRequest data={featureRequest} key={i} /> ) }
+            <div className='featureRequest-list'>
+                { this.state.data.map((featureRequest, i) => <FeatureRequest data={featureRequest} key={i} showActions={showActions} /> ) }
             </div>
         )
     }
 }
+
+FeatureRequestList.propTypes = {
+    user: PropTypes.string.isRequired,
+};
 
 export default FeatureRequestList;

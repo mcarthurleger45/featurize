@@ -5,6 +5,7 @@ import SignupForm from './components/Register/signupform';
 import './App.css';
 import {AUTHENTICATION_API, TOKEN_API} from './endpoints';
 import {getCookie} from './utils';
+import FeatureRequestList from './components/FeatureRequest/list';
 
 class MyApp extends Component {
   constructor(props) {
@@ -95,7 +96,7 @@ class MyApp extends Component {
       default:
         form = null;
     }
-
+    
     return (
       <div className="App">
         <Nav
@@ -109,6 +110,7 @@ class MyApp extends Component {
             ? `Hello, ${this.state.username}`
             : 'Please Log In'}
         </h3>
+        <FeatureRequestList user={this.state.username} />
       </div>
     );
   }
