@@ -37,10 +37,11 @@ class FeatureRequestSerializer(serializers.ModelSerializer):
         return instance
 
 class UserSerializer(serializers.ModelSerializer):
+    feature_requests = FeatureRequestSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('id', 'username', 'feature_requests')
 
 class UserSerializerWithToken(serializers.ModelSerializer):
 

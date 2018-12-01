@@ -13,7 +13,7 @@ class MyApp extends Component {
     this.state = {
       displayed_form: '',
       logged_in: localStorage.getItem('token') ? true : false,
-      username: ''
+      user: ''
     };
   }
 
@@ -26,7 +26,7 @@ class MyApp extends Component {
       })
         .then(res => res.json())
         .then(json => {
-          this.setState({ username: json.username });
+          this.setState({ user: json });
         });
     }
   }
@@ -46,7 +46,7 @@ class MyApp extends Component {
         this.setState({
           logged_in: true,
           displayed_form: '',
-          username: json.user.username
+          user: json.user
         });
       });
   };
@@ -68,7 +68,7 @@ class MyApp extends Component {
         this.setState({
           logged_in: true,
           displayed_form: '',
-          username: json.username
+          user: json.user
         });
       });
   };
@@ -96,7 +96,8 @@ class MyApp extends Component {
       default:
         form = null;
     }
-    
+    const requests = (this.state.logged_in) ? <FeatureRequestList user={this.state.user} />: '';
+
     return (
       <div className="App">
         <Nav
@@ -107,10 +108,10 @@ class MyApp extends Component {
         {form}
         <h3>
           {this.state.logged_in
-            ? `Hello, ${this.state.username}`
+            ? `Hello, ${this.state.user.username}`
             : 'Please Log In'}
         </h3>
-        <FeatureRequestList user={this.state.username} />
+        {requests}
       </div>
     );
   }

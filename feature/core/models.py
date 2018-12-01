@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Client(models.Model):
     name = models.CharField(max_length=50)
@@ -20,6 +21,7 @@ class FeatureRequest(models.Model):
     client = models.ForeignKey(Client, related_name='clients', on_delete=models.SET_NULL, null=True)
     product_area = models.ForeignKey(ProductArea, related_name='products', on_delete=models.SET_NULL, null=True)
     priority = models.IntegerField()
+    user = models.ForeignKey(User, related_name='feature_requests', on_delete=models.CASCADE)
 
     def __str__(self):
         return('[{product}] :: [{title}] by {username}'.format(product=self.product_area, title=self.title, username=self.client))

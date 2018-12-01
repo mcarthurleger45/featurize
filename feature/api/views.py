@@ -5,11 +5,12 @@ from api.serializers import FeatureRequestSerializer, UserSerializer, UserSerial
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework import status
-
+from rest_framework.decorators import action
 
 class FeatureRequestViewset(viewsets.ModelViewSet):
     queryset = FeatureRequest.objects.all()
     serializer_class = FeatureRequestSerializer
+        
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -25,4 +26,10 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['get'])
+    def user(self, request):
+        query = self.queryset.filter(user__id=pk)
+        serializer = self.get_serializer(query, many=True)
+        return Response(serializer.data)
 
